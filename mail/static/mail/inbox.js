@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
   document.querySelector('#compose').addEventListener('click', compose_email);
+  document.querySelector('#compose-form').onsubmit = send_email;  
 
   // By default, load the inboxx
   load_mailbox('inbox');
@@ -30,4 +31,47 @@ function load_mailbox(mailbox) {
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+
+  if (mailbox == "sent") {
+    get_sent_emails()
+  }
+
+  
+
 }
+
+
+function send_email(event) {
+  event.preventDefault()
+  console.log("click");
+  const recipients = document.querySelector('#compose-recipients').value;
+  const subject = document.querySelector('#compose-subject').value;
+  const body = document.querySelector('#compose-body').value;
+  console.log(recipients);
+  fetch('/emails', {
+    method: 'POST',
+    body: JSON.stringify({
+      recipients: recipients,
+      subject: subject,
+      body: body
+    }) 
+  })
+  .then(response => response.json())
+  .then(responsejson => {
+    console.log(responsejson)
+    get_sent_emails()
+  })
+}
+
+  function get_sent_emails(){     
+    console.log("emails_sent_view")
+  // fetch('/emails/inbox')
+  // .then(response => response.json())
+  // .then(emails => {
+  //   // Print emails
+  //   // debugger;
+  //   console.log(emails);
+
+  //   // ... do something else with emails ... 
+  // });
+  }
