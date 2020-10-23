@@ -48,12 +48,12 @@ function load_mailbox(mailbox) {
           emailDiv.id='email'+email.id;
 
           if(email.read==true){
-            emailDiv.style.background="gray";
-            emailDiv.title="The email has been READ";
+            emailDiv.style.background="grey";
+            emailDiv.title="You have read this email.";
           }
           else{
             emailDiv.style.background="white";
-            emailDiv.title="The email has NOT yet been READ";
+            emailDiv.title="You have not read this email";
           }
 
           //
@@ -72,6 +72,16 @@ function load_mailbox(mailbox) {
 
               const body_paragraph = document.createElement("p");
               body_paragraph.innerHTML= email.body
+
+
+              // const archive_button= document.createElement("button");
+              // archive_button.innerHTML="Archive";
+              // archive_button.onclick="archive_email();";
+              // archive_button.className+="btn";
+              // archive_button.className+= " btn-sm";
+              // archive_button.className+= " btn-outline-primary";
+              // archive_button.id="email-id"+email.id;
+
               
               const reply_button= document.createElement("button");
               reply_button.innerHTML="Reply";
@@ -88,7 +98,9 @@ function load_mailbox(mailbox) {
                 document.querySelector("#compose-recipients").value=email.sender;
                 document.querySelector("#compose-subject").value= " RE: "+email.subject;
                 document.querySelector("#compose-body").value= "On "+ email.timestamp + email.sender +" wrote: " + email.body;
-
+              
+            
+              
               });
           
 
@@ -142,6 +154,7 @@ function load_mailbox(mailbox) {
               document.querySelector("#detail-view").appendChild(subject);
               document.querySelector("#detail-view").appendChild(new_line_4);
               document.querySelector("#detail-view").appendChild(reply_button);
+              // document.querySelector("#detail-view").appendChild(archive_button);
               document.querySelector("#detail-view").appendChild(new_line_5);
 
               document.querySelector("#detail-view").appendChild(body_paragraph);
@@ -195,6 +208,7 @@ function load_mailbox(mailbox) {
 
           document.querySelector('#emails-view').append(emailDiv);
         }
+  
 
         // ... do something else with emails ...
     });
@@ -216,8 +230,9 @@ function load_mailbox(mailbox) {
 
 }
 
-//Send Email functio
-function send_email(){
+//Send Email function
+function send_email(event){
+  event.preventDefault()
   const recipient=document.querySelector('#compose-recipients').value;
   const subject=document.querySelector('#compose-subject').value;
   const body=document.querySelector('#compose-body').value;
@@ -234,6 +249,7 @@ function send_email(){
   .then(result => {
       // Print result
       console.log(result);
+      load_mailbox("sent")
   });
 
   load_mailbox("inbox");
