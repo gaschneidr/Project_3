@@ -73,6 +73,24 @@ function load_mailbox(mailbox) {
               const body_paragraph = document.createElement("p");
               body_paragraph.innerHTML= email.body
               
+              const reply_button= document.createElement("button");
+              reply_button.innerHTML="Reply";
+              reply_button.onclick="reply_email();";
+              reply_button.className+="btn";
+              reply_button.className+= " btn-sm";
+              reply_button.className+= " btn-outline-primary";
+              reply_button.id="email-id"+email.id;
+              reply_button.addEventListener("click", function(){
+
+                document.querySelector("#emails-view").style.display="none";
+                document.querySelector("#detail-view").style.display="none";
+                document.querySelector("#compose-view").style.display="block";
+                document.querySelector("#compose-recipients").value=email.sender;
+                document.querySelector("#compose-subject").value= " RE: "+email.subject;
+                document.querySelector("#compose-body").value= "On "+ email.timestamp + email.sender +" wrote: " + email.body;
+
+              });
+          
 
               const from = document.createElement("p");
               from.innerHTML= email.sender;
@@ -123,6 +141,7 @@ function load_mailbox(mailbox) {
               document.querySelector("#detail-view").appendChild(subject_label);
               document.querySelector("#detail-view").appendChild(subject);
               document.querySelector("#detail-view").appendChild(new_line_4);
+              document.querySelector("#detail-view").appendChild(reply_button);
               document.querySelector("#detail-view").appendChild(new_line_5);
 
               document.querySelector("#detail-view").appendChild(body_paragraph);
@@ -222,3 +241,6 @@ function send_email(){
 }
 
 
+function reply_email(){
+
+}
