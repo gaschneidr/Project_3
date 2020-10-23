@@ -25,9 +25,11 @@ function compose_email() {
 
 function load_mailbox(mailbox) {
   //try show_page
+  document.querySelector('#detail-view').style.display="none";
+
   //inbox,sent,archived
   if(mailbox=="inbox"){
-
+    
     fetch('/emails/inbox')
     .then(response => response.json())
     .then(emails => {
@@ -126,12 +128,20 @@ function load_mailbox(mailbox) {
               document.querySelector("#detail-view").appendChild(body_paragraph);
 
               document.querySelector("#emails-view").style.display="none";
+              document.querySelector("#detail-view").style.display="block";
+
+              fetch('/emails/'+id, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    read: true
+            })
 
 
             // ... do something else with email ...
         });
 
-
+        
+        })
 
           });
 
