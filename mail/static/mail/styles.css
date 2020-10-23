@@ -5,3 +5,11 @@ textarea {
 .view_style{
     display: none;
 }
+
+.email-div{
+    border:1px solid black;
+    padding:5px;
+    background: white;
+    cursor: pointer;
+    width: 100%;
+}
