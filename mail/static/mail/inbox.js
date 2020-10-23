@@ -24,7 +24,7 @@ function compose_email() {
 }
 
 function load_mailbox(mailbox) {
-  
+  //try show_page
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
@@ -36,6 +36,9 @@ function load_mailbox(mailbox) {
     get_sent_emails()
   }
 
+  if(mailbox=="inbox"){
+    get_inbox_emails()
+  }
   
 
 }
@@ -60,18 +63,43 @@ function send_email(event) {
   .then(responsejson => {
     console.log(responsejson)
     get_sent_emails()
+    show_page("sent")
   })
 }
 
   function get_sent_emails(){     
     console.log("emails_sent_view")
-  // fetch('/emails/inbox')
-  // .then(response => response.json())
-  // .then(emails => {
-  //   // Print emails
-  //   // debugger;
-  //   console.log(emails);
+  fetch('/emails/sent')
+  // .then (response => console.log(response.json()))
+  .then(response => {
+    console.log(response)
+    var emails= response.json()
+    // Print emails
+    // debugger;
+    console.log(emails);
 
-  //   // ... do something else with emails ... 
-  // });
+    // ... do something else with emails ... 
+  })
+  .catch(err=> console.error(err))
+  }
+
+  var current_page = undefined
+  function show_page(mailbox){
+    if (current_page){
+      $("#"+current_page+"-view").hide()
+    }
+    $("#"+mailbox+"-view").show();
+
+    current_page=mailbox
+  }
+
+  function get_inbox_emails(){
+    fetch('/emails/inbox')
+.then(response => response.json())
+.then(emails => {
+    // Print emails
+    console.log(emails);
+
+    // ... do something else with emails ...
+});
   }

@@ -81,6 +81,7 @@ def mailbox(request, mailbox):
             user=request.user, recipients=request.user, archived=False
         )
     elif mailbox == "sent":
+        print ("in_sent")
         emails = Email.objects.filter(
             user=request.user, sender=request.user
         )

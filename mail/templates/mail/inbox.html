@@ -11,10 +11,10 @@
     <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>
     <hr>
 
-    <div id="emails-view">
+    <div id="emails-view" class="view_style">
     </div>
 
-    <div id="compose-view">
+    <div id="compose-view" class="view_style">
         <h3>New Email</h3>
         <form id="compose-form" onsubmit="send_email()">
             <div class="form-group">
@@ -29,6 +29,9 @@
             <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
             <input type="submit" ss="btn btn-primary"/>
         </form>
+    </div>
+    <div id ="sent-view" class="view_style">
+        <h3>Sent Emails</h3>
     </div>
 {% endblock %}
 
